@@ -11,6 +11,10 @@
 #include <linux/pwm.h>
 #include <video/mipi_display.h>
 
+#ifdef CONFIG_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
+
 #include "dsi_panel.h"
 #include "dsi_ctrl_hw.h"
 #include "dsi_parser.h"
@@ -462,6 +466,12 @@ static int dsi_panel_set_pinctrl_state(struct dsi_panel *panel, bool enable)
 static int dsi_panel_power_on(struct dsi_panel *panel)
 {
 	int rc = 0;
+
+#ifdef CONFIG_POWERSUSPEND
+ 		set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
+#endif
+
+// #ifdef CONFIG_TARGET_PROJECT_K7T
 	int power_status = DRM_PANEL_BLANK_UNBLANK;
 	struct drm_panel_notifier notifier_data;
 
@@ -511,6 +521,19 @@ static int dsi_panel_power_off(struct dsi_panel *panel)
 {
 	int rc = 0;
 
+#ifdef CONFIG_POWERSUSPEND
+	set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
+#endif
+
+#ifdef CONFIG_TARGET_PROJECT_C3Q
+	usleep_range(11000, 11010);	
+	if (get_lct_tp_gesture_status()) 
+  			gesture_flag = true;
+	else gesture_flag = false;
+
+#endif
+
+#ifdef CONFIG_TARGET_PROJECT_K7T
 	usleep_range(11000, 11010);
 
 	if (gpio_is_valid(panel->reset_config.disp_en_gpio))
