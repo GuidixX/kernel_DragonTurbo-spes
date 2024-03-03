@@ -59,11 +59,13 @@ static int touchboost = 1;
 /*******************************sysfs start************************************/
 static int set_touchboost(const char *buf, const struct kernel_param *kp)
 {
-	int val;
-	if (sscanf(buf, "%d\n", &val) != 1)
+        int cnt, val;
+
+	cnt = sscanf(buf, "%d\n", &val);
+	if (cnt != 1)
 		return -EINVAL;
 	touchboost = val;
-	return 0;
+	return cnt;
 }
 
 static int get_touchboost(char *buf, const struct kernel_param *kp)
@@ -84,7 +86,9 @@ static int set_cpu_min_freq(const char *buf, const struct kernel_param *kp)
 	struct cpufreq_policy policy;
 	cpumask_var_t limit_mask;
 
-if (!touchboost) {
+int ret = 0;
+
+        if (!touchboost) {
 		pr_info("Ignored touchboost event!\n");
 		return ret;
 	}
