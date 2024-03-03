@@ -9,8 +9,6 @@
 obj-y				+= irqchip/
 obj-y				+= bus/
 
-obj-$(CONFIG_KLAPSE) 		+= klapse/
-
 obj-$(CONFIG_GENERIC_PHY)	+= phy/
 
 obj-$(CONFIG_VSERVICES_SUPPORT)	+= vservices/

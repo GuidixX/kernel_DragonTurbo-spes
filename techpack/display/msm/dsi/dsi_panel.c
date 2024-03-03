@@ -21,9 +21,6 @@
 #include "exposure_adjustment.h"
 #endif
 
-#ifdef CONFIG_KLAPSE
-#include <linux/klapse.h>
-#endif
 /**
  * topology is currently defined by a set of following 3 values:
  * 1. num of layer mixers
@@ -951,9 +948,7 @@ static int dsi_panel_bl_unregister(struct dsi_panel *panel)
 		rc = -ENOTSUPP;
 		goto error;
 	}
-#ifdef CONFIG_KLAPSE
-	set_rgb_slider(bl_lvl);
-	#endif
+
 error:
 	return rc;
 }
