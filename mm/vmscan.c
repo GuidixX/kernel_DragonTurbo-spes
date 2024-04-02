@@ -2398,7 +2398,6 @@ static void get_scan_count(struct lruvec *lruvec, struct mem_cgroup *memcg,
 	 * too expensive.
 	 */
 	if (!global_reclaim(sc) && !swappiness) {
-#endif /* CONFIG_OPLUS_MM_HACKS */
 		scan_balance = SCAN_FILE;
 		goto out;
 	}
