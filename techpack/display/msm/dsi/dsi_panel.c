@@ -533,7 +533,6 @@ static int dsi_panel_power_off(struct dsi_panel *panel)
 
 #endif
 
-#ifdef CONFIG_TARGET_PROJECT_K7T
 	usleep_range(11000, 11010);
 
 	if (gpio_is_valid(panel->reset_config.disp_en_gpio))
