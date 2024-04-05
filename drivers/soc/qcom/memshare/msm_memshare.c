@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Copyright (c) 2013-2020, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #include <linux/err.h>
@@ -482,7 +482,6 @@ static void handle_alloc_generic_req(struct qmi_handle *handle,
 	}
 
 	if (!memblock[client_id].allotted && alloc_req->num_bytes > 0) {
-
 		if (alloc_req->num_bytes > memblock[client_id].init_size)
 			alloc_req->num_bytes = memblock[client_id].init_size;
 
@@ -490,7 +489,7 @@ static void handle_alloc_generic_req(struct qmi_handle *handle,
 			size = alloc_req->num_bytes + MEMSHARE_GUARD_BYTES;
 		else
 			size = alloc_req->num_bytes;
-		rc = memshare_alloc(memsh_drv->dev, size,
+rc = memshare_alloc(memsh_drv->dev, size,
 					&memblock[client_id]);
 		if (rc) {
 			dev_err(memsh_child->dev,
